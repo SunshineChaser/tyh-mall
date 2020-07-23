@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+
+<mapper namespace="edu.learning.tyh.item.dao.ProductItemMapper">
+	<!--1、第一次生成静态页面,所有的商品都查询出来 -->
+	<select id="selectItemList" resultType="edu.learning.tyh.pojo.Porduct">
+		select pid, catid, pname, pprice,
+		psaleprice, pdig, pno,pkeywords,
+		phot, pfirst, psalenum,
+		pstock, pstate, pimg,pdes
+		from porduct where pstate=1
+	</select>
+	
+	<!--2、添加一条商品，根据这个商品id查询这个商品的详细信息-->
+	<select id="selectItemById" resultType="edu.learning.tyh.pojo.Porduct" parameterType="java.lang.String">
+		select pid, catid, pname, pprice,
+		psaleprice, pdig, pno,pkeywords,
+		phot, pfirst, psalenum,
+		pstock, pstate, pimg,pdes
+		from porduct where pstate=1
+		and pid=#{id}
+	</select>
+	
+	<!--3、根据商品的id查询商品的图片列表-->
+	<select id="selectImgByPid" resultType="edu.learning.tyh.pojo.ProductImg" parameterType="java.lang.String">
+		select pimgid, pid, pimgaddr, pimgindex from ProductImg
+		where pid=#{id} order by pimgindex asc
+	</select>
+	
+</mapper>

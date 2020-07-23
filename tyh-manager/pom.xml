@@ -1,0 +1,32 @@
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+  <modelVersion>4.0.0</modelVersion>
+  <parent>
+    <groupId>edu.learning</groupId>
+    <artifactId>tyh-parent</artifactId>
+    <version>0.0.1-SNAPSHOT</version>
+  </parent>
+  <groupId>edu.learning</groupId>
+  <artifactId>tyh-manager</artifactId>
+  <version>0.0.1-SNAPSHOT</version>
+  <packaging>pom</packaging>
+  
+  <dependencies>
+  	<dependency>
+  		<groupId>edu.learning</groupId>
+  		<artifactId>tyh-common</artifactId>
+  		<version>0.0.1-SNAPSHOT</version>
+  	</dependency>
+  	<dependency>
+  		<groupId>edu.learning</groupId>
+  		<artifactId>tyh-pojo</artifactId>
+  		<version>0.0.1-SNAPSHOT</version>
+  	</dependency>
+  </dependencies>
+  
+  <modules>
+  	<module>tyh-manager-dto</module>
+  	<module>tyh-manager-dao</module>
+  	<module>tyh-manager-interfaces</module>
+  	<module>tyh-manager-service</module>
+  </modules>
+</project>

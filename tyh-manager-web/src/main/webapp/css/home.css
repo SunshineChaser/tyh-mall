@@ -1,0 +1,9 @@
+#productlist img{
+	height: 200px;
+}
+
+#homecarousel .carousel-inner .item img{
+	height: 370px;
+	width: 100%;
+}
+

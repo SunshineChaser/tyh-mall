@@ -1,0 +1,253 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="edu.learning.tyh.home.dao.PorductMapper" >
+  <resultMap id="BaseResultMap" type="edu.learning.tyh.pojo.Porduct" >
+    <id column="pid" property="pid" jdbcType="VARCHAR" />
+    <result column="catid" property="catid" jdbcType="VARCHAR" />
+    <result column="pname" property="pname" jdbcType="VARCHAR" />
+    <result column="pprice" property="pprice" jdbcType="DECIMAL" />
+    <result column="psaleprice" property="psaleprice" jdbcType="DECIMAL" />
+    <result column="pdig" property="pdig" jdbcType="VARCHAR" />
+    <result column="pno" property="pno" jdbcType="VARCHAR" />
+    <result column="pkeywords" property="pkeywords" jdbcType="VARCHAR" />
+    <result column="phot" property="phot" jdbcType="INTEGER" />
+    <result column="pfirst" property="pfirst" jdbcType="INTEGER" />
+    <result column="psalenum" property="psalenum" jdbcType="DECIMAL" />
+    <result column="pstock" property="pstock" jdbcType="DECIMAL" />
+    <result column="pstate" property="pstate" jdbcType="INTEGER" />
+    <result column="pimg" property="pimg" jdbcType="VARCHAR" />
+  </resultMap>
+  <resultMap id="ResultMapWithBLOBs" type="edu.learning.tyh.pojo.Porduct" extends="BaseResultMap" >
+    <result column="pdes" property="pdes" jdbcType="LONGVARCHAR" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+    pid, catid, pname, pprice, psaleprice, pdig, pno, pkeywords, phot, pfirst, psalenum, 
+    pstock, pstate, pimg
+  </sql>
+  <sql id="Blob_Column_List" >
+    pdes
+  </sql>
+  <select id="selectByPrimaryKey" resultMap="ResultMapWithBLOBs" parameterType="java.lang.String" >
+    select 
+    <include refid="Base_Column_List" />
+    ,
+    <include refid="Blob_Column_List" />
+    from porduct
+    where pid = #{pid,jdbcType=VARCHAR}
+  </select>
+  
+  <!-- 查询首推商品 -->
+  <select id="selectProByFirst" resultMap="ResultMapWithBLOBs">
+    select pid, catid, pname, pprice, psaleprice, pdig, pno, pkeywords, phot, pfirst, psalenum, 
+    pstock, pstate, pimg,pdes
+    from porduct
+    where pfirst=1 and pstate=1
+  </select>
+  
+  <!-- 按照分类查询商品列表 -->
+  <select id="selectByItemCat" resultMap="ResultMapWithBLOBs" parameterType="java.lang.String">
+    select pid, catid, pname, pprice, psaleprice, pdig, pno, pkeywords, phot, pfirst, psalenum, 
+    pstock, pstate, pimg,pdes
+    from porduct
+    where catid=#{catid} and pstate=1
+  </select>
+  
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.String" >
+    delete from porduct
+    where pid = #{pid,jdbcType=VARCHAR}
+  </delete>
+  <insert id="insert" parameterType="edu.learning.tyh.pojo.Porduct" >
+    insert into porduct (pid, catid, pname, 
+      pprice, psaleprice, pdig, 
+      pno, pkeywords, phot, 
+      pfirst, psalenum, pstock, 
+      pstate, pimg, pdes
+      )
+    values (#{pid,jdbcType=VARCHAR}, #{catid,jdbcType=VARCHAR}, #{pname,jdbcType=VARCHAR}, 
+      #{pprice,jdbcType=DECIMAL}, #{psaleprice,jdbcType=DECIMAL}, #{pdig,jdbcType=VARCHAR}, 
+      #{pno,jdbcType=VARCHAR}, #{pkeywords,jdbcType=VARCHAR}, #{phot,jdbcType=INTEGER}, 
+      #{pfirst,jdbcType=INTEGER}, #{psalenum,jdbcType=DECIMAL}, #{pstock,jdbcType=DECIMAL}, 
+      #{pstate,jdbcType=INTEGER}, #{pimg,jdbcType=VARCHAR}, #{pdes,jdbcType=LONGVARCHAR}
+      )
+  </insert>
+  <insert id="insertSelective" parameterType="edu.learning.tyh.pojo.Porduct" >
+    insert into porduct
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="pid != null" >
+        pid,
+      </if>
+      <if test="catid != null" >
+        catid,
+      </if>
+      <if test="pname != null" >
+        pname,
+      </if>
+      <if test="pprice != null" >
+        pprice,
+      </if>
+      <if test="psaleprice != null" >
+        psaleprice,
+      </if>
+      <if test="pdig != null" >
+        pdig,
+      </if>
+      <if test="pno != null" >
+        pno,
+      </if>
+      <if test="pkeywords != null" >
+        pkeywords,
+      </if>
+      <if test="phot != null" >
+        phot,
+      </if>
+      <if test="pfirst != null" >
+        pfirst,
+      </if>
+      <if test="psalenum != null" >
+        psalenum,
+      </if>
+      <if test="pstock != null" >
+        pstock,
+      </if>
+      <if test="pstate != null" >
+        pstate,
+      </if>
+      <if test="pimg != null" >
+        pimg,
+      </if>
+      <if test="pdes != null" >
+        pdes,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="pid != null" >
+        #{pid,jdbcType=VARCHAR},
+      </if>
+      <if test="catid != null" >
+        #{catid,jdbcType=VARCHAR},
+      </if>
+      <if test="pname != null" >
+        #{pname,jdbcType=VARCHAR},
+      </if>
+      <if test="pprice != null" >
+        #{pprice,jdbcType=DECIMAL},
+      </if>
+      <if test="psaleprice != null" >
+        #{psaleprice,jdbcType=DECIMAL},
+      </if>
+      <if test="pdig != null" >
+        #{pdig,jdbcType=VARCHAR},
+      </if>
+      <if test="pno != null" >
+        #{pno,jdbcType=VARCHAR},
+      </if>
+      <if test="pkeywords != null" >
+        #{pkeywords,jdbcType=VARCHAR},
+      </if>
+      <if test="phot != null" >
+        #{phot,jdbcType=INTEGER},
+      </if>
+      <if test="pfirst != null" >
+        #{pfirst,jdbcType=INTEGER},
+      </if>
+      <if test="psalenum != null" >
+        #{psalenum,jdbcType=DECIMAL},
+      </if>
+      <if test="pstock != null" >
+        #{pstock,jdbcType=DECIMAL},
+      </if>
+      <if test="pstate != null" >
+        #{pstate,jdbcType=INTEGER},
+      </if>
+      <if test="pimg != null" >
+        #{pimg,jdbcType=VARCHAR},
+      </if>
+      <if test="pdes != null" >
+        #{pdes,jdbcType=LONGVARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="edu.learning.tyh.pojo.Porduct" >
+    update porduct
+    <set >
+      <if test="catid != null" >
+        catid = #{catid,jdbcType=VARCHAR},
+      </if>
+      <if test="pname != null" >
+        pname = #{pname,jdbcType=VARCHAR},
+      </if>
+      <if test="pprice != null" >
+        pprice = #{pprice,jdbcType=DECIMAL},
+      </if>
+      <if test="psaleprice != null" >
+        psaleprice = #{psaleprice,jdbcType=DECIMAL},
+      </if>
+      <if test="pdig != null" >
+        pdig = #{pdig,jdbcType=VARCHAR},
+      </if>
+      <if test="pno != null" >
+        pno = #{pno,jdbcType=VARCHAR},
+      </if>
+      <if test="pkeywords != null" >
+        pkeywords = #{pkeywords,jdbcType=VARCHAR},
+      </if>
+      <if test="phot != null" >
+        phot = #{phot,jdbcType=INTEGER},
+      </if>
+      <if test="pfirst != null" >
+        pfirst = #{pfirst,jdbcType=INTEGER},
+      </if>
+      <if test="psalenum != null" >
+        psalenum = #{psalenum,jdbcType=DECIMAL},
+      </if>
+      <if test="pstock != null" >
+        pstock = #{pstock,jdbcType=DECIMAL},
+      </if>
+      <if test="pstate != null" >
+        pstate = #{pstate,jdbcType=INTEGER},
+      </if>
+      <if test="pimg != null" >
+        pimg = #{pimg,jdbcType=VARCHAR},
+      </if>
+      <if test="pdes != null" >
+        pdes = #{pdes,jdbcType=LONGVARCHAR},
+      </if>
+    </set>
+    where pid = #{pid,jdbcType=VARCHAR}
+  </update>
+  <update id="updateByPrimaryKeyWithBLOBs" parameterType="edu.learning.tyh.pojo.Porduct" >
+    update porduct
+    set catid = #{catid,jdbcType=VARCHAR},
+      pname = #{pname,jdbcType=VARCHAR},
+      pprice = #{pprice,jdbcType=DECIMAL},
+      psaleprice = #{psaleprice,jdbcType=DECIMAL},
+      pdig = #{pdig,jdbcType=VARCHAR},
+      pno = #{pno,jdbcType=VARCHAR},
+      pkeywords = #{pkeywords,jdbcType=VARCHAR},
+      phot = #{phot,jdbcType=INTEGER},
+      pfirst = #{pfirst,jdbcType=INTEGER},
+      psalenum = #{psalenum,jdbcType=DECIMAL},
+      pstock = #{pstock,jdbcType=DECIMAL},
+      pstate = #{pstate,jdbcType=INTEGER},
+      pimg = #{pimg,jdbcType=VARCHAR},
+      pdes = #{pdes,jdbcType=LONGVARCHAR}
+    where pid = #{pid,jdbcType=VARCHAR}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="edu.learning.tyh.pojo.Porduct" >
+    update porduct
+    set catid = #{catid,jdbcType=VARCHAR},
+      pname = #{pname,jdbcType=VARCHAR},
+      pprice = #{pprice,jdbcType=DECIMAL},
+      psaleprice = #{psaleprice,jdbcType=DECIMAL},
+      pdig = #{pdig,jdbcType=VARCHAR},
+      pno = #{pno,jdbcType=VARCHAR},
+      pkeywords = #{pkeywords,jdbcType=VARCHAR},
+      phot = #{phot,jdbcType=INTEGER},
+      pfirst = #{pfirst,jdbcType=INTEGER},
+      psalenum = #{psalenum,jdbcType=DECIMAL},
+      pstock = #{pstock,jdbcType=DECIMAL},
+      pstate = #{pstate,jdbcType=INTEGER},
+      pimg = #{pimg,jdbcType=VARCHAR}
+    where pid = #{pid,jdbcType=VARCHAR}
+  </update>
+</mapper>

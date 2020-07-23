@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xmlns:mvc="http://www.springframework.org/schema/mvc"
+	xmlns:context="http://www.springframework.org/schema/context"
+	xmlns:dubbo="http://code.alibabatech.com/schema/dubbo"
+	xsi:schemaLocation="http://www.springframework.org/schema/mvc http://www.springframework.org/schema/mvc/spring-mvc-4.3.xsd
+		http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd
+		http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context-4.3.xsd
+		http://dubbo.apache.org/schema/dubbo http://dubbo.apache.org/schema/dubbo/dubbo.xsd
+		http://code.alibabatech.com/schema/dubbo http://code.alibabatech.com/schema/dubbo/dubbo.xsd">
+	
+	<context:component-scan base-package="edu.learning.tyh.sso.controllers"></context:component-scan>
+
+	<!-- 开启springmvc注解模式 -->
+	<mvc:annotation-driven></mvc:annotation-driven>
+	<!-- 过滤静态资源。如果使用注解方式配置了requestmapping，则必须开启springmvc的注解模式 -->
+	<mvc:default-servlet-handler></mvc:default-servlet-handler>
+
+	<!-- 配置视图解析器 -->
+	<bean
+		class="org.springframework.web.servlet.view.InternalResourceViewResolver">
+		<property name="viewClass"
+			value="org.springframework.web.servlet.view.JstlView"></property>
+		<property name="prefix" value="/WEB-INF/jsp/"></property>
+		<property name="suffix" value=".jsp">
+		</property>
+	</bean>
+	
+	<!-- 使用dubbo发布服务 -->
+	<!-- 服务提供者应用信息，用于计算依赖关系 -->
+	<dubbo:application name="tyh-sso-web" />
+	<!-- 注册中心地址。使用zookeeper作为注册中心，地址为2.1中所启动的zookeeper地址。还可以是配置多个注册中心，在address中使用逗号分割 -->
+	<dubbo:registry group="tyh" protocol="zookeeper" address="120.76.137.138:2181" timeout="60000"/>
+	<!-- 声明需要暴露的服务接口,ref链接实现对象 -->
+	<dubbo:reference interface="edu.learning.tyh.sso.interfaces.TyhUserService"
+		id="tyhUserServiceImpl" timeout="40000"/>
+</beans>

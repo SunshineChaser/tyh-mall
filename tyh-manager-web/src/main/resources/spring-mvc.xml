@@ -1,0 +1,69 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xmlns:aop="http://www.springframework.org/schema/aop"
+	xmlns:mvc="http://www.springframework.org/schema/mvc"
+	xmlns:context="http://www.springframework.org/schema/context"
+	xmlns:dubbo="http://code.alibabatech.com/schema/dubbo"
+	xsi:schemaLocation="http://www.springframework.org/schema/mvc http://www.springframework.org/schema/mvc/spring-mvc-4.3.xsd
+		http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd
+		http://www.springframework.org/schema/aop http://www.springframework.org/schema/aop/spring-aop-4.3.xsd
+		http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context-4.3.xsd
+		http://dubbo.apache.org/schema/dubbo http://dubbo.apache.org/schema/dubbo/dubbo.xsd
+		http://code.alibabatech.com/schema/dubbo http://code.alibabatech.com/schema/dubbo/dubbo.xsd">
+	
+	<context:component-scan base-package="edu.learning.tyh"></context:component-scan>
+
+	<!-- 开启springmvc注解模式 -->
+	<mvc:annotation-driven></mvc:annotation-driven>
+	<!-- 过滤静态资源。如果使用注解方式配置了requestmapping，则必须开启springmvc的注解模式 -->
+	<mvc:default-servlet-handler></mvc:default-servlet-handler>
+	
+	<!-- 设置目标类 -->
+	<!-- <bean id="productController" class="edu.learning.tyh.manager.controller.ProductController" />
+	<bean id="itemCatController" class="edu.learning.tyh.manager.controller.ItemCatController"/> -->
+	
+	<!-- 设置切面类 -->
+	<!-- <bean id="updateProductCacheAspect" class="edu.learning.tyh.manager.tools.UpdateProductCacheAspect"/>
+	<bean id="updateItemcatCacheAspect" class="edu.learning.tyh.manager.tools.UpdateItemcatCacheAspect"/> -->
+	
+	<!-- aop配置，拦截哪些方法（切入点表达式，拦截上面的事务增强），必须配置切入点和通知 -->
+	<!-- <aop:config>
+		<aop:aspect ref="updateProductCacheAspect">
+			<aop:pointcut id="updatePro" expression="execution(* edu.learning.tyh.manager.controller.ProductController.insertProduct && updateProduct(..))"/>
+			<aop:around method="updateProCacheAOP" pointcut-ref="updatePro"/>
+		</aop:aspect>
+		
+		<aop:aspect ref="updateItemcatCacheAspect">
+			<aop:pointcut id="updateItemcat" expression="execution(* edu.learning.tyh.manager.controller.ItemCatController.insertItemCat && updateItemCat(..))"/>
+			<aop:around method="updateItemCatCacheAOP" pointcut-ref="updateItemcat"/>
+		</aop:aspect>
+	</aop:config> -->
+
+	<!-- 配置视图解析器 -->
+	<bean
+		class="org.springframework.web.servlet.view.InternalResourceViewResolver">
+		<property name="viewClass"
+			value="org.springframework.web.servlet.view.JstlView"></property>
+		<property name="prefix" value="/WEB-INF/jsp/"></property>
+		<property name="suffix" value=".jsp">
+		</property>
+	</bean>
+	<!-- 配置多媒体文件解析器 -->
+	<!-- 文件上传 -->
+	<bean id="multipartResolver"
+	    class="org.springframework.web.multipart.commons.CommonsMultipartResolver">
+	    <!-- 设置上传文件的最大尺寸为10MB 1024*1024*10 -->
+	    <property name="maxUploadSize">
+	        <value>10485760</value>
+	    </property>
+	</bean>
+	
+	<!-- 引用dubbo服务 -->
+	<dubbo:application name="tyh-manager-web" />
+	<dubbo:registry protocol="zookeeper" address="120.76.137.138:2181" timeout="60000"/>
+	<dubbo:reference interface="edu.learning.tyh.manager.service.interfaces.ItemCatService"
+		id="itemCatServiceImpl" timeout="40000"/>
+	<dubbo:reference interface="edu.learning.tyh.manager.service.interfaces.ProductService"
+		id="ProductServiceImpl" timeout="40000"/>
+</beans>
