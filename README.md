@@ -10,6 +10,7 @@
 > * nginx
 > * dubbo
 > * freemaker
+> * zookeeper
 
 ## 1.首页
 
@@ -27,6 +28,7 @@
 ### 3.2商品管理
 - SSM框架实现对于商品的增删改查
 - 使用fastdfs分布式文件系统+nginx作为商品图片的管理
+- CKeditor+fastdfs，增加商品时的富文本编辑器部分
 
 ### 3.3发送更新消息
 - 当商品或者商品类型被更新时（包括增加，修改，删除），通过activeMQ发送更新消息
@@ -35,3 +37,10 @@
 - 注册
 - SSO单点登录
 - 登录状态信息存储在Redis中，前端通过读取cookie发送登录验证
+
+## 5.其他
+- dubbo服务
+- zookeeper作为注册中心
+- 使用maven进行管理
+- 本地使用Tomcat插件
+- 服务器上使用Tomcat9
