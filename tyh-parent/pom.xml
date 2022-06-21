@@ -13,7 +13,7 @@
 		<spring.version>4.3.18.RELEASE</spring.version>
 		<aspectj.version>1.9.2</aspectj.version>
 		<aopalliance.version>1.0</aopalliance.version>
-		<mysql-connector.version>8.0.19</mysql-connector.version>
+		<mysql-connector.version>8.0.28</mysql-connector.version>
 		<c3p0.version>0.9.5.2</c3p0.version>
 		<jstl.version>1.2</jstl.version>
 		<servlet-api.version>2.5</servlet-api.version>
